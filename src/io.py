@@ -36,7 +36,7 @@ def data_attributes(subject):
     shape = dset.shape
     data_type = dset.dtype
     return file,dset,shape,data_type
-def select_data(subject):
+def select_data(subject, rows, columns):
     """
     This function returns selected rows and columns. The arguments are subject (as defined above,
     the subject of interest), rows (the range of desired rows), and columns (the range of desired
