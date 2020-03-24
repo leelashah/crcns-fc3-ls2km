@@ -43,7 +43,7 @@ def select_data(subject, rows, columns):
     columns). The function loads the data using the load_data function above. The function
     returns the rows and columns indicated by the arguments.
     """
-    data = load.data(subject,rows,columns)
+    data = load_data(subject)
     r = data[rows]
     c = data[columns]
     return r, c
