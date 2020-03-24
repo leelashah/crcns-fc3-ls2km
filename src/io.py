@@ -44,5 +44,6 @@ def select_data(subject):
     returns the rows and columns indicated by the arguments.
     """
     data = load.data(subject,rows,columns)
-    row = data[rows]
-    column = data[columns]
+    r = data[rows]
+    c = data[columns]
+    return r, c
