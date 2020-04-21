@@ -22,7 +22,19 @@ def load_data(filename):
     file_to_open = os.path.join(data_folder, "data_primary.bdf")
     raw = mne.io.read_raw_bdf(file_to_open, eog=None, misc=None, stim_channel='auto', exclude= 'None', preload=False, verbose=None)
     return raw 
-
+  
+def exclude_bad_channels(data,bad_channels):
+    """
+    This function marks bad channels, as specified by the user, so that future mne functions will ignore these channels in calculations.
+    The arguments are data (the name of the data returned using the load_data function) and bad_channels (a list of bad channels as
+    identified by the user). The function returns a list of the channel numbers that that are good (good_eeg) and a list of all of the
+    channel numbers (all_eeg). Note that these lists are the indexes of the channels in order, not the names of the channels.
+    """  
+    data.info['bads'].extend(bad_channels)
+    good_eeg = mne.pick_types(raw.info, meg=False, eeg = True)
+    all_eeg = mne.pick_types(raw.info, meg=False, eeg=True, exclude=[])
+    return(good_eeg, all_eeg)
+  
 def psd_plot(data,duration=5, n_channels=30):
     """
     This function uses the MNE package to first plot the data for a given duration and number of channels, then plots a power spectral 
