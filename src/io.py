@@ -58,21 +58,28 @@ def filter(data,duration=5,n_channels=10,l_freq=1,h_freq=40):
     data.load_data().filter(l_freq=l_freq, h_freq=h_freq)
     data.plot(duration=duration, n_channels=n_channels)
     
-def ica(data,regexp):
+def ica_fit(data,components):
     """
-    This function uses the MNE package to use independent component analysis (ICA) to remove artifacts from the data. The required 
-    argument data is the name of the data returned using the load_data function, and the required argument regexp is a regular 
-    expression used to identify the channels containing visible artifacts. The function first plots the ICA components, then runs ICA, 
-    then plots the raw plot and the plot of the data with ICA applied.
+    This function uses the MNE package to implement the first step of independent component analysis (ICA), which is a tool to remove
+    artifacts from the data. The required arguments are data(the name of the data returned using the load_data function), and
+    components (the number of components from the principal component analysis (PCA) to use). Begin at a low number (about 15)
+    for components; then, if artifacts in the ICA are still not visible, increase the number. The function fits the ICA to the data, 
+    then plots a time series of the ICA components.
     """  
-    artifact_picks = mne.pick_channels_regexp(data.ch_names, regexp=regexp)
-    n_channels = len(artifact_picks)
-    print(artifact_picks)
-    ica = ICA(n_components=n_channels, random_state=97)
-    ica.fit(raw)
-    data.load_data()
+    ica = ICA(n_components=components, random_state=97)
+    ica.fit(data)
     ica.plot_sources(data)
-    reconst_raw = data.copy()
-    ica.apply(reconst_raw)
-    data.plot(order=artifact_picks, n_channels=len(artifact_picks))
-    reconst_raw.plot(order=artifact_picks, n_channels=len(artifact_picks))
+    
+def ica_apply(data,exclude,duration=5,n_channels=20):
+    """
+    This function uses the IC components chosen by the user that contain artifacts to apply ICA to the data, to remove those same
+    artifacts from the data. The required arguments are data (the name of the data returned using the load_data function) and
+    exclude (a list of the IC components chosen by the user to contain artifacts). The optional components are duration
+    (the duration of data to visualize) and n_channels (the number of channels to visualize). The defaults for these values are 5 and
+    20, respectively. The function applies the ICA using the given exclusions, then plots the resulting data. 
+    """  
+    data.plot(duration=duration, n_channels=n_channels)
+    ica.exclude = exclude
+    ica.apply(raw2)
+    data.plot(duration=5, n_channels=20) 
+    
