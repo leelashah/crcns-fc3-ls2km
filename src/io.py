@@ -69,6 +69,7 @@ def ica_fit(data,components):
     ica = ICA(n_components=components, random_state=97)
     ica.fit(data)
     ica.plot_sources(data)
+    return(ica)
     
 def ica_apply(data,exclude,duration=5,n_channels=20):
     """
@@ -80,6 +81,6 @@ def ica_apply(data,exclude,duration=5,n_channels=20):
     """  
     data.plot(duration=duration, n_channels=n_channels)
     ica.exclude = exclude
-    ica.apply(raw2)
+    ica.apply(data)
     data.plot(duration=5, n_channels=20) 
     
