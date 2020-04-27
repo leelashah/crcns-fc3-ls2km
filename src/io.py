@@ -34,6 +34,7 @@ def exclude_bad_channels(data,bad_channels):
     good_eeg = mne.pick_types(data.info, meg=False, eeg = True)
     all_eeg = mne.pick_types(data.info, meg=False, eeg=True, exclude=[])
     return(good_eeg, all_eeg)
+    return data
   
 def psd_plot(data,duration=5, n_channels=30):
     """
@@ -57,6 +58,7 @@ def filter(data,duration=5,n_channels=10,l_freq=1,h_freq=None):
     data.plot(duration=duration, n_channels=n_channels)
     data.load_data().filter(l_freq=l_freq, h_freq=h_freq)
     data.plot(duration=duration, n_channels=n_channels)
+    return data
     
 def ica_fit(data,components):
     """
@@ -69,7 +71,7 @@ def ica_fit(data,components):
     ica = ICA(n_components=components, random_state=97)
     ica.fit(data)
     ica.plot_sources(data)
-    return(ica)
+    return ica
     
 def ica_apply(ica,data,exclude,duration=5,n_channels=20):
     """
@@ -82,5 +84,6 @@ def ica_apply(ica,data,exclude,duration=5,n_channels=20):
     data.plot(duration=duration, n_channels=n_channels)
     ica.exclude = exclude
     ica.apply(data)
-    data.plot(duration=duration, n_channels=n_channels) 
+    data.plot(duration=duration, n_channels=n_channels)
+    return data
     
