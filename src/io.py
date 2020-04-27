@@ -71,7 +71,7 @@ def ica_fit(data,components):
     ica.plot_sources(data)
     return(ica)
     
-def ica_apply(data,exclude,duration=5,n_channels=20):
+def ica_apply(data,ica,exclude,duration=5,n_channels=20):
     """
     This function uses the IC components chosen by the user that contain artifacts to apply ICA to the data, to remove those same
     artifacts from the data. The required arguments are data (the name of the data returned using the load_data function) and
