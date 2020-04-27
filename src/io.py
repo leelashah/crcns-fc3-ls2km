@@ -33,7 +33,6 @@ def exclude_bad_channels(data,bad_channels):
     data.info['bads'].extend(bad_channels)
     good_eeg = mne.pick_types(data.info, meg=False, eeg = True)
     all_eeg = mne.pick_types(data.info, meg=False, eeg=True, exclude=[])
-    return(good_eeg, all_eeg)
     return data
   
 def psd_plot(data,duration=5, n_channels=30):
