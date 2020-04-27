@@ -45,7 +45,7 @@ def psd_plot(data,duration=5, n_channels=30):
     data.plot(duration=duration, n_channels=n_channels)
     data.plot_psd()
 
-def filter(data,duration=5,n_channels=10,l_freq=1,h_freq=40):
+def filter(data,duration=5,n_channels=10,l_freq=1,h_freq=None):
     """
     This function uses the MNE package to filter the data. The required argument data is the name of the data returned using the
     load_data function, and optional arguments are duration (the length of the desired segment of data), n_channels (the number of  
