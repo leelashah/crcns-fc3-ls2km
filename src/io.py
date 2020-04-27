@@ -31,8 +31,8 @@ def exclude_bad_channels(data,bad_channels):
     channel numbers (all_eeg). Note that these lists are the indexes of the channels in order, not the names of the channels.
     """  
     data.info['bads'].extend(bad_channels)
-    good_eeg = mne.pick_types(raw.info, meg=False, eeg = True)
-    all_eeg = mne.pick_types(raw.info, meg=False, eeg=True, exclude=[])
+    good_eeg = mne.pick_types(data.info, meg=False, eeg = True)
+    all_eeg = mne.pick_types(data.info, meg=False, eeg=True, exclude=[])
     return(good_eeg, all_eeg)
   
 def psd_plot(data,duration=5, n_channels=30):
